@@ -1,6 +1,21 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/common/Api_Constant.dart';
+import 'package:movie_app/data/core/api_client.dart';
+import 'package:movie_app/data/data_sources/movie_datasourece.dart';
 
 void main() {
+  MovieRemoteDataSource movieRemoteDataSource =MovieRemoteDataSourceImpl(
+    ApiClient( Dio(
+        BaseOptions(
+            baseUrl: ApiConstant.BASE_URL
+        )
+    ))
+  );
+  movieRemoteDataSource.getTrending();
+  movieRemoteDataSource.getPopular();
+  movieRemoteDataSource.getComingSoon();
+  movieRemoteDataSource.getPlayingNow();
   runApp(const MyApp());
 }
 
