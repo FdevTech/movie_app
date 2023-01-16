@@ -1,3 +1,27 @@
+import '../../domain/entities/movie_entity.dart';
+
+extension MovieModelToEntiry on List<MovieModel>
+{
+  List<MovieEntity> toMovieEntity()
+  {
+    return map((movieModel){
+      return MovieEntity(
+       posterPath: movieModel.posterPath!,
+        id: movieModel.id!,
+        backdropPath: movieModel.backdropPath!,
+        title: movieModel.title!,
+        voteAverage: movieModel.voteAverage!,
+        releaseDate: movieModel.releaseDate!,
+        overview: movieModel.overview!,
+
+
+      );
+    }).toList();
+  }
+}
+
+
+
 class MovieModel {
   bool? adult;
   String? backdropPath;
