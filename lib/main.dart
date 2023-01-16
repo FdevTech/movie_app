@@ -1,23 +1,21 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/common/Api_Constant.dart';
 import 'package:movie_app/data/core/api_client.dart';
 import 'package:movie_app/data/data_sources/movie_datasourece.dart';
 import 'package:movie_app/data/repositories/movie_repository_impl.dart';
+import 'package:movie_app/di/get_it.dart';
 import 'package:movie_app/domain/repositories/movie_repository.dart';
 import 'package:movie_app/domain/usecases/get_trending.dart';
 import 'dart:developer' as dev show log;
-
+import 'di/get_it.dart' as getIt;
 import 'domain/entities/no_params.dart';
 void main() async{
-  ApiClient apiClient =  ApiClient( Dio(
-      BaseOptions(
-          baseUrl: ApiConstant.BASE_URL
-      )
-  ));
-  MovieRemoteDataSource dataSource = MovieRemoteDataSourceImpl(apiClient);
-  MovieRepository movieRepository = MovieRepositoryImpl(remoteDataSource: dataSource);
-  GetTrending getTrending = GetTrending(repository: movieRepository);
+  unawaited(init());
+  GetTrending getTrending = getIt.getItInstance<GetTrending>();
+
   final eitherResponse = await getTrending(NoParams());
   eitherResponse.fold((l) {
               print("error");
