@@ -8,7 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/common/constants/Api_Constant.dart';
 import 'package:movie_app/presentation/blocs/bloc_backdrop/backdrop_bloc.dart';
 
-import '../../../common/constants/size_contants.dart';
+import '../../../../common/constants/size_contants.dart';
+
 
 class MovieBackDropWidget extends StatelessWidget {
   const MovieBackDropWidget({Key? key}) : super(key: key);

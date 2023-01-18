@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/presentation/blocs/bloc_backdrop/backdrop_bloc.dart';
-import 'package:movie_app/presentation/journeys/movie_carousel/movie_card_widget.dart';
 
-import '../../../common/constants/size_contants.dart';
-import '../../../domain/entities/movie_entity.dart';
+import '../../../../common/constants/size_contants.dart';
+import '../../../../domain/entities/movie_entity.dart';
 import 'animated_movie_card_widget.dart';
 
 class MoviePageView extends StatefulWidget {

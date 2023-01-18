@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/common/constants/size_contants.dart';
-import 'package:movie_app/presentation/journeys/movie_carousel/movie_card_widget.dart';
+
+import 'movie_card_widget.dart';
+
 
 class AnimatedMovieCardWidget extends StatelessWidget {
   final int index;
