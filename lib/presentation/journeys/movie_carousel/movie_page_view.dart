@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movie_app/presentation/blocs/bloc_backdrop/backdrop_bloc.dart';
 import 'package:movie_app/presentation/journeys/movie_carousel/movie_card_widget.dart';
 
 import '../../../common/constants/size_contants.dart';
@@ -36,6 +38,7 @@ class _MoviePageViewState extends State<MoviePageView> {
   }
   @override
   Widget build(BuildContext context) {
+    final backdropBloc = BlocProvider.of<BackdropBloc>(context);
     return Container(
       margin:EdgeInsets.symmetric(vertical: Sizes.dimen_10.h),
       height: ScreenUtil().screenHeight*0.35,
@@ -53,7 +56,7 @@ class _MoviePageViewState extends State<MoviePageView> {
                 movieId: movieEntity.id);
           },
           onPageChanged: (index){
-
+            backdropBloc.add(MovieBackdropChangeEvent(movie: widget.movies[index]));
           },
       ),
     );

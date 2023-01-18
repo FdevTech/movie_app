@@ -7,6 +7,7 @@ import 'package:movie_app/data/repositories/movie_repository_impl.dart';
 import 'package:movie_app/domain/repositories/movie_repository.dart';
 import 'package:movie_app/domain/usecases/get_comming_soon.dart';
 import 'package:movie_app/domain/usecases/get_popular.dart';
+import 'package:movie_app/presentation/blocs/bloc_backdrop/backdrop_bloc.dart';
 import 'package:movie_app/presentation/blocs/bloc_carousel/movie_carasel_bloc.dart';
 
 import '../common/constants/Api_Constant.dart';
@@ -38,7 +39,9 @@ Future init() async {
 
   getItInstance.registerLazySingleton<MovieRepository>(() => MovieRepositoryImpl(remoteDataSource: getItInstance()));
   
-  getItInstance.registerFactory(() => MovieCarouselBloc(getTrending: getItInstance()));
+  getItInstance.registerFactory(() => MovieCarouselBloc(getTrending: getItInstance(), backdropBloc: getItInstance()));
+
+  getItInstance.registerFactory<BackdropBloc>(() => BackdropBloc());
 
 
 

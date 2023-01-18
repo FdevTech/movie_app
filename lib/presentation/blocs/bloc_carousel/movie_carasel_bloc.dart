@@ -8,12 +8,15 @@ import 'package:movie_app/domain/entities/no_params.dart';
 import '../../../domain/entities/movie_entity.dart';
 import '../../../domain/usecases/get_trending.dart';
 import 'dart:developer' as dev show log;
+
+import '../bloc_backdrop/backdrop_bloc.dart';
 part 'movie_carasel_event.dart';
 part 'movie_carasel_state.dart';
 
 class MovieCarouselBloc extends Bloc<MovieCarouselEvent, MovieCarouselState> {
   final GetTrending getTrending;
-  MovieCarouselBloc({required this.getTrending}) : super(MovieCarouselInitial()) {
+  final BackdropBloc backdropBloc;
+  MovieCarouselBloc({required this.getTrending, required this.backdropBloc}) : super(MovieCarouselInitial()) {
 
     on<CarouselLoadEvent>((event, emit) async{
          dev.log("===carouselLoadEvent=====");
@@ -23,6 +26,7 @@ class MovieCarouselBloc extends Bloc<MovieCarouselEvent, MovieCarouselState> {
          },
                  (movies) {
                    dev.log("carouselLoadEvent===${movies.length}");
+                   backdropBloc.add(MovieBackdropChangeEvent(movie: movies[event.defaultIndex]));
                    emit( MovieCarouselLoaded(movies: movies, defaultIndex: event.defaultIndex));
                  });
     });
