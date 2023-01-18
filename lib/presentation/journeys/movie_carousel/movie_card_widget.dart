@@ -17,6 +17,7 @@ class MovieCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       elevation: 32,
+      color: Colors.transparent,
       child: GestureDetector(
         onTap: (){},
         child: ClipRRect(

@@ -17,7 +17,7 @@ class MovieBackDropWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return FractionallySizedBox(
       alignment: Alignment.topCenter,
-      widthFactor: 1,
+      widthFactor: 3,
       child: ClipRRect(
         borderRadius: BorderRadius.vertical(
           bottom: Radius.circular(Sizes.dimen_40.w)
@@ -27,7 +27,7 @@ class MovieBackDropWidget extends StatelessWidget {
           children: [
             FractionallySizedBox(
               heightFactor: 1,
-              widthFactor: 2,
+              widthFactor: 3,
               child: BlocBuilder<BackdropBloc, BackdropState>(
                 builder: (context, state) {
                   if(state is MovieBackdropChangeState)
