@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/di/get_it.dart';
-import 'package:movie_app/presentation/blocs/movie_carasel_bloc.dart';
+import 'package:movie_app/presentation/blocs/bloc_carousel/movie_carasel_bloc.dart';
 import 'dart:developer' as dev show log;
 import '../movie_carousel/movie_carousel_widget.dart';
 

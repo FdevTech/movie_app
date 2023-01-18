@@ -7,7 +7,7 @@ import 'package:movie_app/data/repositories/movie_repository_impl.dart';
 import 'package:movie_app/domain/repositories/movie_repository.dart';
 import 'package:movie_app/domain/usecases/get_comming_soon.dart';
 import 'package:movie_app/domain/usecases/get_popular.dart';
-import 'package:movie_app/presentation/blocs/movie_carasel_bloc.dart';
+import 'package:movie_app/presentation/blocs/bloc_carousel/movie_carasel_bloc.dart';
 
 import '../common/constants/Api_Constant.dart';
 import '../data/core/api_client.dart';

@@ -5,8 +5,8 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:movie_app/domain/entities/no_params.dart';
 
-import '../../domain/entities/movie_entity.dart';
-import '../../domain/usecases/get_trending.dart';
+import '../../../domain/entities/movie_entity.dart';
+import '../../../domain/usecases/get_trending.dart';
 import 'dart:developer' as dev show log;
 part 'movie_carasel_event.dart';
 part 'movie_carasel_state.dart';

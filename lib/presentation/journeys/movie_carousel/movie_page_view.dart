@@ -4,6 +4,7 @@ import 'package:movie_app/presentation/journeys/movie_carousel/movie_card_widget
 
 import '../../../common/constants/size_contants.dart';
 import '../../../domain/entities/movie_entity.dart';
+import 'animated_movie_card_widget.dart';
 
 class MoviePageView extends StatefulWidget {
   final List<MovieEntity> movies;
@@ -45,7 +46,9 @@ class _MoviePageViewState extends State<MoviePageView> {
           pageSnapping: true,
           itemBuilder: (context, index){
             final movieEntity = widget.movies[index];
-            return MovieCardWidget(
+            return AnimatedMovieCardWidget(
+                index: index,
+                pageController: _pageController,
                 posterPath: movieEntity.posterPath,
                 movieId: movieEntity.id);
           },
