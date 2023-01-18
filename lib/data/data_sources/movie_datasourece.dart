@@ -1,7 +1,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart';
-import 'package:movie_app/common/Api_Constant.dart';
+import 'package:movie_app/common/constants/Api_Constant.dart';
 import 'package:movie_app/data/models/movie_modal.dart';
 import 'package:movie_app/data/models/movie_result_model.dart';
 

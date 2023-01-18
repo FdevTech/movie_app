@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../common/Api_Constant.dart';
+import '../../common/constants/Api_Constant.dart';
 
 class ApiClient {
 
