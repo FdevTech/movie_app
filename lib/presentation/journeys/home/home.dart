@@ -6,6 +6,7 @@ import 'package:movie_app/presentation/blocs/bloc_carousel/movie_carasel_bloc.da
 import 'package:movie_app/presentation/blocs/movie_tabbed/movie_tabed_bloc.dart';
 import 'dart:developer' as dev show log;
 
+import '../../drawer/navigation_drawer.dart';
 import 'movie_carousel/movie_carousel_widget.dart';
 import 'movie_tabed/movie_tabbed_widget.dart';
 
@@ -47,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
         BlocProvider(create: (context)=>movieTabBloc)
       ],
       child: Scaffold(
+        drawer: const NavigationDrawer(),
         body: BlocBuilder<MovieCarouselBloc, MovieCarouselState>(
           builder: (context, state) {
             dev.log("$state");
