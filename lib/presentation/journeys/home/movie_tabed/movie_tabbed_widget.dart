@@ -5,10 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/common/constants/size_contants.dart';
 import 'package:movie_app/presentation/blocs/movie_tabbed/movie_tabed_bloc.dart';
 import 'package:movie_app/presentation/journeys/home/movie_tabed/tab_title_widget.dart';
+import 'package:movie_app/presentation/widgets/appl_error_widget.dart';
 
 import 'MovieTabbedConstatnts.dart';
 import 'movie_list_view_builder.dart';
-
+import 'dart:developer' as dev show log;
 
 class MovieTabbedWidget extends StatefulWidget {
   const MovieTabbedWidget({Key? key}) : super(key: key);
@@ -40,6 +41,7 @@ class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
   Widget build(BuildContext context) {
     return BlocBuilder<MovieTabBloc, MovieTabState>(
       builder: (context, state) {
+        if(state is MovieTabChangedState){ dev.log("state=>${state.movies.length}");}
         return Padding(
           padding:  EdgeInsets.only(top: Sizes.dimen_4.h),
           child: Column(
@@ -58,7 +60,14 @@ class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
                   ],
                 ),
                 if(state is MovieTabChangedState)
-                  Expanded(child: MovieListView(movies: state.movies))
+                  Expanded(child: MovieListView(movies: state.movies)),
+
+                if(state is MovieTabErrorState)
+                  AppErrorWidget(
+                      appErrorType: state.appErrorType,
+                      onPress: (){
+                          movieTabBloc.add(MovieTabChangedEvent(currentTabIndex: currentTabIndex));
+                      })
               ],
           ),
         );
@@ -67,6 +76,7 @@ class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
   }
   void _onTabTapped(int index)
   {
+    dev.log("index=>$index");
     movieTabBloc.add(MovieTabChangedEvent(currentTabIndex: index));
   }
 }

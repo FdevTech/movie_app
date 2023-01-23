@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:movie_app/domain/entities/app_erro.dart';
 import 'package:movie_app/domain/entities/no_params.dart';
 
 import '../../../domain/entities/movie_entity.dart';
@@ -22,7 +23,9 @@ class MovieCarouselBloc extends Bloc<MovieCarouselEvent, MovieCarouselState> {
          dev.log("===carouselLoadEvent=====");
          final movieEither = await getTrending(NoParams());
          movieEither.fold((l) {
-            emit(MovieCarouselError());
+            emit(MovieCarouselError(
+              l.appErrorType
+            ));
          },
                  (movies) {
                    dev.log("carouselLoadEvent===${movies.length}");

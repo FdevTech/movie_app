@@ -6,7 +6,7 @@ import 'package:movie_app/data/models/movie_modal.dart';
 import 'package:movie_app/data/models/movie_result_model.dart';
 
 import '../core/api_client.dart';
-
+import 'dart:developer' as dev show log;
 abstract class MovieRemoteDataSource {
 
   Future<List<MovieModel>> getTrending();
@@ -25,7 +25,7 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource
 
      final responseBody= await _client.get("trending/movie/day");
      final movies = MovieResultsModel.fromJson(responseBody).results;
-     print("trending: ${movies?.length.toString()}");
+     dev.log("get trending => ${movies?.length}");
          return movies!;
 
 
@@ -36,7 +36,7 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource
 
     final responseBody= await _client.get("movie/popular",);
     final movies = MovieResultsModel.fromJson(responseBody).results;
-    print("popular:${movies?.length.toString()}");
+    dev.log("get popular => ${movies?.length}");
     return movies!;
 
   }
@@ -45,7 +45,7 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource
 
     final responseBody= await _client.get("movie/upcoming",);
     final movies = MovieResultsModel.fromJson(responseBody).results;
-    print("coming soon:${movies?.length.toString()}");
+    dev.log("get  soon  => ${movies?.length}");
     return movies!;
 
   }
@@ -54,7 +54,8 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource
 
     final responseBody= await _client.get("movie/now_playing",);
     final movies = MovieResultsModel.fromJson(responseBody).results;
-    print("playing now:${movies?.length.toString()}");
+   // print("playing now:${movies?.length.toString()}");
+    dev.log("get playing now => ${movies?.length}");
     return movies!;
 
   }

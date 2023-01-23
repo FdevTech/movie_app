@@ -8,7 +8,7 @@ extension MovieModelToEntiry on List<MovieModel>
       return MovieEntity(
        posterPath: movieModel.posterPath!,
         id: movieModel.id!,
-        backdropPath: movieModel.backdropPath!,
+        backdropPath: movieModel.backdropPath,
         title: movieModel.title!,
         voteAverage: movieModel.voteAverage!,
         releaseDate: movieModel.releaseDate!,

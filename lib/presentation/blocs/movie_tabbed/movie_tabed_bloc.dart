@@ -11,6 +11,7 @@ import '../../../domain/usecases/get_comming_soon.dart';
 import '../../../domain/usecases/get_playing_now.dart';
 import '../../../domain/usecases/get_popular.dart';
 
+import 'dart:developer' as dev show log;
 part 'movie_tabed_event.dart';
 part 'movie_tabed_state.dart';
 
@@ -18,29 +19,35 @@ class MovieTabBloc extends Bloc<MovieTabEvent, MovieTabState> {
   final GetPopular getPopular;
   final GetPlayingNow getPlayingNow;
   final GetComingSoon getComingSoon;
-  late final Either<AppError, List<MovieEntity>> _movieEither;
+
   MovieTabBloc({
     required this.getPlayingNow,
     required this.getPopular,
     required this.getComingSoon}) : super(const MovieTabInitialState()) {
     on<MovieTabChangedEvent>((event, emit) async {
-
+      Either<AppError, List<MovieEntity>> movieEither;
+      dev.log("currentTabIndex:=>${event.currentTabIndex}");
       switch(event.currentTabIndex)
       {
+
         case 0:
-          _movieEither = await getPopular(NoParams());
+          movieEither = await getPopular(NoParams());
           break;
         case 1:
-          _movieEither = await getPlayingNow(NoParams());
+          movieEither = await getPlayingNow(NoParams());
           break;
         case 2:
-           _movieEither = await getComingSoon(NoParams());
+          movieEither = await getComingSoon(NoParams());
+          break;
+        default:
+          movieEither=  await getPopular(NoParams());
       }
-      _movieEither.fold((movies) {
-         emit(MovieTabErrorState(event.currentTabIndex));
+      movieEither.fold((error) {
+         emit(MovieTabErrorState(event.currentTabIndex,appErrorType: error.appErrorType));
       },
               (movies) {
-                emit(MovieTabChangedState(movies: movies));
+                dev.log("fold right=> ${movies.length}");
+                emit(MovieTabChangedState(movies: movies,currentIndex: event.currentTabIndex));
 
               });
     });

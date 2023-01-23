@@ -6,7 +6,7 @@ import 'package:movie_app/presentation/themes/theme_text.dart';
 
 class TabTitleWidget extends StatelessWidget {
   final String title;
-  final Function onTap;
+  final void Function() onTap;
   final bool isSelected;
   const TabTitleWidget({Key? key,
   required this.title,
@@ -16,19 +16,22 @@ class TabTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        border: Border(
-          bottom: BorderSide(
-            color: isSelected?AppColor.royalBlue:Colors.transparent,
-            width: Sizes.dimen_1.h
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          border: Border(
+            bottom: BorderSide(
+              color: isSelected?AppColor.royalBlue:Colors.transparent,
+              width: Sizes.dimen_1.h
+            )
           )
-        )
-      ),
-      child: Text(
-        title,
-        style: isSelected?Theme.of(context).textTheme.royalBlueSubtitle2:Theme.of(context).textTheme.subtitle1,
+        ),
+        child: Text(
+          title,
+          style: isSelected?Theme.of(context).textTheme.royalBlueSubtitle2:Theme.of(context).textTheme.subtitle1,
+        ),
       ),
     );
   }

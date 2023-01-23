@@ -25,7 +25,8 @@ class MovieTabChangedState extends MovieTabState {
 
 class MovieTabErrorState extends MovieTabState
 {
-  const MovieTabErrorState(int currentIndex):super(currentTabIndex:currentIndex);
+  final AppErrorType appErrorType;
+  const MovieTabErrorState(int currentIndex,{required this.appErrorType}):super(currentTabIndex:currentIndex);
   @override
   List<Object?> get props => [];
 
