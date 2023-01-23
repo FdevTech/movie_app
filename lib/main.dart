@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:movie_app/di/get_it.dart';
-import 'package:movie_app/presentation/widgets/movie_app.dart';
+import 'package:movie_app/presentation/movie_app.dart';
 
 void main() {
   init();

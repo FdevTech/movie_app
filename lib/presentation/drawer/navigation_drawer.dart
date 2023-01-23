@@ -7,10 +7,13 @@ import 'package:movie_app/common/extensions/string_extension.dart';
 import 'package:movie_app/presentation/blocs/language_bloc/language_bloc.dart';
 import 'package:movie_app/presentation/drawer/navigation_list_item.dart';
 import 'package:movie_app/presentation/widgets/logo.dart';
+import 'package:wiredash/wiredash.dart';
 
 import '../../common/constants/languages.dart';
 import '../../common/constants/size_contants.dart';
 import '../app_localization.dart';
+import '../themes/app_colors.dart';
+import '../widgets/app_dialog.dart';
 import 'navigation_expanded_list_tile.dart';
 import 'dart:developer' as dev show log;
 class NavigationDrawer extends StatelessWidget {
@@ -56,13 +59,33 @@ class NavigationDrawer extends StatelessWidget {
               ),
               NavigationListItem(
                   title: TranslationConstants.feedback.t(context),
-                  onPressed: (){}),
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                    Wiredash.of(context).show();
+                  }),
               NavigationListItem(
                   title: TranslationConstants.about.t(context),
-                  onPressed: (){})
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                    _showDialog(context);
+                  })
             ],
           )),
 
+    );
+  }
+  void _showDialog(BuildContext context)
+  {
+    showDialog(
+        context: context, 
+        builder:(context){
+          return AppDialog(
+            title: "About",
+            description: "This product uses the TMDB API but is not, endorsed or certified by TMDb."
+                "This app is developed for education purpose.",
+            child: Image.asset("assets/pngs/tmdb_logo.png"),
+          );
+        }
     );
   }
 }
