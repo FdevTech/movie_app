@@ -6,10 +6,12 @@ import 'package:movie_app/data/data_sources/movie_datasourece.dart';
 import 'package:movie_app/data/repositories/movie_repository_impl.dart';
 import 'package:movie_app/domain/repositories/movie_repository.dart';
 import 'package:movie_app/domain/usecases/get_comming_soon.dart';
+import 'package:movie_app/domain/usecases/get_movie_detail.dart';
 import 'package:movie_app/domain/usecases/get_popular.dart';
 import 'package:movie_app/presentation/blocs/bloc_backdrop/backdrop_bloc.dart';
 import 'package:movie_app/presentation/blocs/bloc_carousel/movie_carasel_bloc.dart';
 import 'package:movie_app/presentation/blocs/language_bloc/language_bloc.dart';
+import 'package:movie_app/presentation/blocs/movie_detail/movie_detail_bloc.dart';
 import 'package:movie_app/presentation/blocs/movie_tabbed/movie_tabed_bloc.dart';
 
 import '../common/constants/Api_Constant.dart';
@@ -39,6 +41,8 @@ Future init() async {
 
   getItInstance.registerLazySingleton<GetComingSoon>(() => GetComingSoon(repository: getItInstance()));
 
+  getItInstance.registerLazySingleton<GetMovieDetail>(() => GetMovieDetail(getItInstance()));
+
   getItInstance.registerLazySingleton<MovieRepository>(() => MovieRepositoryImpl(remoteDataSource: getItInstance()));
   
   getItInstance.registerFactory(() => MovieCarouselBloc(getTrending: getItInstance(), backdropBloc: getItInstance()));
@@ -52,6 +56,10 @@ Future init() async {
 
 
   getItInstance.registerSingleton<LanguageBloc>(LanguageBloc());
+
+
+
+  getItInstance.registerFactory<MovieDetailBloc>(() => MovieDetailBloc(getMovieDetail: getItInstance()));
 
 
 }

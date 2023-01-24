@@ -47,6 +47,7 @@ class _MovieAppState extends State<MovieApp> {
                   {
                     return WireDashApp(
                       child: MaterialApp(
+                        debugShowCheckedModeBanner: false,
                         theme: ThemeData(
                             primaryColor: AppColor.vulcan,
                             accentColor: AppColor.royalBlue,

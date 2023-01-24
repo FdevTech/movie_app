@@ -58,4 +58,11 @@ extension ThemeTextExtension on TextTheme {
       letterSpacing: 0.25,
       height: 1.5
   );
+
+  TextStyle get greySubtitle1 => subtitle1!.copyWith(
+    color: Colors.grey
+  );
+  TextStyle get violetHeadline6 => headline6!.copyWith(
+    color: AppColor.violet
+  );
 }

@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/common/constants/Api_Constant.dart';
 import 'package:movie_app/common/constants/size_contants.dart';
 import 'package:movie_app/common/extensions/string_extension.dart';
+import 'package:movie_app/presentation/journeys/movie_detail/movie_detail_arguments.dart';
+import 'package:movie_app/presentation/journeys/movie_detail/movie_detail_screen.dart';
 
 class MovieTabCardWidget extends StatelessWidget {
  final int movieId;
@@ -16,28 +18,37 @@ class MovieTabCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(Sizes.dimen_16.w),
-              child: CachedNetworkImage(
-               imageUrl: "${ApiConstant.BASE_IMAGE_URL}$posterPath",
-               fit: BoxFit.cover,
-              ),
+    return GestureDetector(
+      onTap: (){
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context){
+            return MovieDetailScreen(movieDetailArguments: MovieDetailArguments(movieId)) ;
+          })
+        );
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(Sizes.dimen_16.w),
+                child: CachedNetworkImage(
+                 imageUrl: "${ApiConstant.BASE_IMAGE_URL}$posterPath",
+                 fit: BoxFit.cover,
+                ),
 
-            )),
-         Padding(
-           padding:EdgeInsets.only(top: Sizes.dimen_4.h),
-           child: Text(
-             title.intelliTrim(),
-             maxLines: 1,
-             textAlign: TextAlign.center,
-             style: Theme.of(context).textTheme.subtitle2,
-           ),
-         )
-      ],
+              )),
+           Padding(
+             padding:EdgeInsets.only(top: Sizes.dimen_4.h),
+             child: Text(
+               title.intelliTrim(),
+               maxLines: 1,
+               textAlign: TextAlign.center,
+               style: Theme.of(context).textTheme.subtitle2,
+             ),
+           )
+        ],
+      ),
     );
   }
 }

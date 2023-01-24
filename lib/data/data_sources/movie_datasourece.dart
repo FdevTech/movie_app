@@ -2,6 +2,7 @@
 import 'package:dio/dio.dart';
 import 'package:http/http.dart';
 import 'package:movie_app/common/constants/Api_Constant.dart';
+import 'package:movie_app/data/models/movie_detail_model.dart';
 import 'package:movie_app/data/models/movie_modal.dart';
 import 'package:movie_app/data/models/movie_result_model.dart';
 
@@ -13,6 +14,8 @@ abstract class MovieRemoteDataSource {
   Future<List<MovieModel>> getPopular();
   Future<List<MovieModel>> getComingSoon();
   Future<List<MovieModel>> getPlayingNow();
+
+  Future<MovieDetailModel> getMovieDetail(int id);
 }
 
 class MovieRemoteDataSourceImpl extends MovieRemoteDataSource
@@ -58,6 +61,14 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource
     dev.log("get playing now => ${movies?.length}");
     return movies!;
 
+  }
+
+  @override
+  Future<MovieDetailModel> getMovieDetail(int id) async{
+    final response = await _client.get("/movie/$id");
+    final movie = MovieDetailModel.fromJson(response);
+
+    return movie;
   }
 
 }
