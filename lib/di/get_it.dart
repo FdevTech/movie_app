@@ -16,8 +16,10 @@ import 'package:movie_app/presentation/blocs/movie_tabbed/movie_tabed_bloc.dart'
 
 import '../common/constants/Api_Constant.dart';
 import '../data/core/api_client.dart';
+import '../domain/usecases/getCast.dart';
 import '../domain/usecases/get_playing_now.dart';
 import '../domain/usecases/get_trending.dart';
+import '../presentation/blocs/cast_bloc.dart';
 
 final getItInstance = GetIt.I;
 
@@ -44,6 +46,7 @@ Future init() async {
   getItInstance.registerLazySingleton<GetMovieDetail>(() => GetMovieDetail(getItInstance()));
 
   getItInstance.registerLazySingleton<MovieRepository>(() => MovieRepositoryImpl(remoteDataSource: getItInstance()));
+  getItInstance.registerLazySingleton<GetCast>(() => GetCast(repository: getItInstance()));
   
   getItInstance.registerFactory(() => MovieCarouselBloc(getTrending: getItInstance(), backdropBloc: getItInstance()));
 
@@ -57,9 +60,9 @@ Future init() async {
 
   getItInstance.registerSingleton<LanguageBloc>(LanguageBloc());
 
+  getItInstance.registerFactory<CastBloc>(() => CastBloc(getCast: getItInstance()));
 
-
-  getItInstance.registerFactory<MovieDetailBloc>(() => MovieDetailBloc(getMovieDetail: getItInstance()));
+  getItInstance.registerFactory<MovieDetailBloc>(() => MovieDetailBloc(getMovieDetail: getItInstance(),castBloc: getItInstance()));
 
 
 }
