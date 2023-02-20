@@ -5,6 +5,7 @@ import 'package:movie_app/common/constants/Api_Constant.dart';
 import 'package:movie_app/data/models/cast_crew_result_data_model.dart';
 import 'package:movie_app/data/models/movie_detail_model.dart';
 import 'package:movie_app/data/models/movie_modal.dart';
+import 'package:movie_app/data/models/movie_model.dart';
 import 'package:movie_app/data/models/movie_result_model.dart';
 
 import '../core/api_client.dart';
@@ -19,6 +20,8 @@ abstract class MovieRemoteDataSource {
   Future<MovieDetailModel> getMovieDetail(int id);
 
   Future<List<CastModel>> getCastCrew(int id);
+
+  Future<List<VideoItemModel>?> getVideos(int id);
 }
 
 class MovieRemoteDataSourceImpl extends MovieRemoteDataSource
@@ -80,6 +83,14 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource
     final cast = CastCrewResultModel.fromJson(response).cast;
 
     return cast;
+  }
+
+  @override
+  Future<List<VideoItemModel>?> getVideos(int id) async {
+    final response = await _client.get("/movie/$id/videos");
+    final videos = VideoModel.fromJson(response).results;
+
+    return videos;
   }
 
 }

@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:movie_app/data/data_sources/movie_datasourece.dart';
 import 'package:movie_app/data/repositories/movie_repository_impl.dart';
 import 'package:movie_app/domain/repositories/movie_repository.dart';
+import 'package:movie_app/domain/usecases/getVideos.dart';
 import 'package:movie_app/domain/usecases/get_comming_soon.dart';
 import 'package:movie_app/domain/usecases/get_movie_detail.dart';
 import 'package:movie_app/domain/usecases/get_popular.dart';
@@ -20,6 +21,7 @@ import '../domain/usecases/getCast.dart';
 import '../domain/usecases/get_playing_now.dart';
 import '../domain/usecases/get_trending.dart';
 import '../presentation/blocs/cast_bloc.dart';
+import '../presentation/blocs/videobloc/video_bloc.dart';
 
 final getItInstance = GetIt.I;
 
@@ -45,7 +47,10 @@ Future init() async {
 
   getItInstance.registerLazySingleton<GetMovieDetail>(() => GetMovieDetail(getItInstance()));
 
+  getItInstance.registerLazySingleton<GetVideos>(() => GetVideos(movieRepository: getItInstance()));
+
   getItInstance.registerLazySingleton<MovieRepository>(() => MovieRepositoryImpl(remoteDataSource: getItInstance()));
+
   getItInstance.registerLazySingleton<GetCast>(() => GetCast(repository: getItInstance()));
   
   getItInstance.registerFactory(() => MovieCarouselBloc(getTrending: getItInstance(), backdropBloc: getItInstance()));
@@ -62,7 +67,12 @@ Future init() async {
 
   getItInstance.registerFactory<CastBloc>(() => CastBloc(getCast: getItInstance()));
 
-  getItInstance.registerFactory<MovieDetailBloc>(() => MovieDetailBloc(getMovieDetail: getItInstance(),castBloc: getItInstance()));
+  getItInstance.registerFactory<VideoBloc>(() => VideoBloc(getVideo: getItInstance()));
+  
+  getItInstance.registerFactory<MovieDetailBloc>(() => MovieDetailBloc(
+      getMovieDetail: getItInstance(),
+      castBloc: getItInstance(),
+      videoBloc: getItInstance()));
 
 
 }

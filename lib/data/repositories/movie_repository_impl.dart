@@ -6,9 +6,11 @@ import 'package:movie_app/data/data_sources/movie_datasourece.dart';
 import 'package:movie_app/data/models/cast_crew_result_data_model.dart';
 import 'package:movie_app/data/models/movie_detail_model.dart';
 import 'package:movie_app/data/models/movie_modal.dart';
+import 'package:movie_app/data/models/movie_model.dart';
 import 'package:movie_app/domain/entities/cast_entity.dart';
 import 'package:movie_app/domain/entities/movie_detail_entity.dart';
 import 'package:movie_app/domain/entities/movie_entity.dart';
+import 'package:movie_app/domain/entities/video_entity.dart';
 import 'package:movie_app/domain/repositories/movie_repository.dart';
 
 import '../../domain/entities/app_erro.dart';
@@ -95,6 +97,17 @@ class MovieRepositoryImpl extends MovieRepository
     on Exception{
       return const Left(AppError(AppErrorType.network));
     }
+  }
+
+  @override
+  Future<Either<AppError, List<VideoEntity>>> getVideos(int id) async {
+       try{
+       final videos  = await remoteDataSource.getVideos(id);
+       return Right(videos?.toVideoEntity()??[]);
+       }
+       on Exception {
+         return const Left(AppError(AppErrorType.network));
+       }
   }
 
 }
