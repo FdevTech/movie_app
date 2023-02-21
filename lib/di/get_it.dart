@@ -20,7 +20,9 @@ import '../data/core/api_client.dart';
 import '../domain/usecases/getCast.dart';
 import '../domain/usecases/get_playing_now.dart';
 import '../domain/usecases/get_trending.dart';
+import '../domain/usecases/search_case.dart';
 import '../presentation/blocs/cast_bloc.dart';
+import '../presentation/blocs/searchBloc/search_bloc.dart';
 import '../presentation/blocs/videobloc/video_bloc.dart';
 
 final getItInstance = GetIt.I;
@@ -47,6 +49,8 @@ Future init() async {
 
   getItInstance.registerLazySingleton<GetMovieDetail>(() => GetMovieDetail(getItInstance()));
 
+  getItInstance.registerLazySingleton<SearchCase>(() => SearchCase(movieRepository:getItInstance()));
+
   getItInstance.registerLazySingleton<GetVideos>(() => GetVideos(movieRepository: getItInstance()));
 
   getItInstance.registerLazySingleton<MovieRepository>(() => MovieRepositoryImpl(remoteDataSource: getItInstance()));
@@ -68,6 +72,8 @@ Future init() async {
   getItInstance.registerFactory<CastBloc>(() => CastBloc(getCast: getItInstance()));
 
   getItInstance.registerFactory<VideoBloc>(() => VideoBloc(getVideo: getItInstance()));
+
+  getItInstance.registerFactory<SearchBloc>(() => SearchBloc(searchCase: getItInstance()));
   
   getItInstance.registerFactory<MovieDetailBloc>(() => MovieDetailBloc(
       getMovieDetail: getItInstance(),

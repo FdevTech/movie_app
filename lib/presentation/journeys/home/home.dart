@@ -6,6 +6,7 @@ import 'package:movie_app/presentation/blocs/bloc_carousel/movie_carasel_bloc.da
 import 'package:movie_app/presentation/blocs/movie_tabbed/movie_tabed_bloc.dart';
 import 'dart:developer' as dev show log;
 
+import '../../blocs/searchBloc/search_bloc.dart';
 import '../../drawer/navigation_drawer.dart';
 
 import '../../widgets/appl_error_widget.dart';
@@ -47,7 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
       providers: [
         BlocProvider<MovieCarouselBloc>(create: (context) => movieCarouselBloc),
         BlocProvider<BackdropBloc>(create: (context)=>backdropBloc),
-        BlocProvider(create: (context)=>movieTabBloc)
+        BlocProvider(create: (context)=>movieTabBloc),
+        BlocProvider<SearchBloc>(create: (context)=>getItInstance<SearchBloc>())
       ],
       child: Scaffold(
         drawer: const NavigationDrawer(),

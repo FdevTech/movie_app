@@ -1,12 +1,9 @@
-
-import 'package:dio/dio.dart';
-import 'package:http/http.dart';
-import 'package:movie_app/common/constants/Api_Constant.dart';
 import 'package:movie_app/data/models/cast_crew_result_data_model.dart';
 import 'package:movie_app/data/models/movie_detail_model.dart';
 import 'package:movie_app/data/models/movie_modal.dart';
 import 'package:movie_app/data/models/movie_model.dart';
 import 'package:movie_app/data/models/movie_result_model.dart';
+import 'package:movie_app/domain/entities/movie_entity.dart';
 
 import '../core/api_client.dart';
 import 'dart:developer' as dev show log;
@@ -22,6 +19,8 @@ abstract class MovieRemoteDataSource {
   Future<List<CastModel>> getCastCrew(int id);
 
   Future<List<VideoItemModel>?> getVideos(int id);
+  
+  Future<List<MovieModel>?> searchVide(String query);
 }
 
 class MovieRemoteDataSourceImpl extends MovieRemoteDataSource
@@ -91,6 +90,13 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource
     final videos = VideoModel.fromJson(response).results;
 
     return videos;
+  }
+
+  @override
+  Future<List<MovieModel>?> searchVide(String query) async{
+     final response = await _client.search("/search/movie", query);
+     final movies = MovieResultsModel.fromJson(response).results;
+     return  movies;
   }
 
 }

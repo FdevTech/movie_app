@@ -6,13 +6,13 @@ extension MovieModelToEntiry on List<MovieModel>
   {
     return map((movieModel){
       return MovieEntity(
-       posterPath: movieModel.posterPath!,
-        id: movieModel.id!,
-        backdropPath: movieModel.backdropPath,
-        title: movieModel.title!,
-        voteAverage: movieModel.voteAverage!,
-        releaseDate: movieModel.releaseDate!,
-        overview: movieModel.overview!,
+       posterPath: movieModel.posterPath??"",
+        id: movieModel.id??-1,
+        backdropPath: movieModel.backdropPath??"",
+        title: movieModel.title??"",
+        voteAverage: movieModel.voteAverage??-1.0,
+        releaseDate: movieModel.releaseDate??"",
+        overview: movieModel.overview??"",
 
 
       );

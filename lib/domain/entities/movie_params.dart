@@ -9,3 +9,15 @@ class MovieParams extends Equatable
   List<Object?> get props => [id];
 
 }
+
+
+
+class SearchParams extends Equatable {
+  final String query;
+
+  const SearchParams(this.query);
+
+  @override
+  List<Object?> get props => [query];
+
+}

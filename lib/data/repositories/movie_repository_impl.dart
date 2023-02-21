@@ -110,4 +110,18 @@ class MovieRepositoryImpl extends MovieRepository
        }
   }
 
+  @override
+  Future<Either<AppError, List<MovieEntity>>> searchMovie(String query) async {
+       try{
+         final movies = await remoteDataSource.searchVide(query);
+         if(movies!=null) {
+           return  Right(movies.toMovieEntity());
+         } else {
+           return const Right([]);
+         }
+       } on Exception {
+         return const Left(AppError(AppErrorType.api));
+       }
+  }
+
 }
