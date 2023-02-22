@@ -1,14 +1,20 @@
 
-
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
+import 'package:movie_app/data/data_sources/favorite_datasources.dart';
 import 'package:movie_app/data/data_sources/movie_datasourece.dart';
+import 'package:movie_app/data/models/local/local_movie.dart';
 import 'package:movie_app/data/repositories/movie_repository_impl.dart';
 import 'package:movie_app/domain/repositories/movie_repository.dart';
+import 'package:movie_app/domain/usecases/favorite_movie/addfav_usecase.dart';
+import 'package:movie_app/domain/usecases/favorite_movie/getAllFavUseCase.dart';
+import 'package:movie_app/domain/usecases/favorite_movie/unfav_usecase.dart';
 import 'package:movie_app/domain/usecases/getVideos.dart';
 import 'package:movie_app/domain/usecases/get_comming_soon.dart';
 import 'package:movie_app/domain/usecases/get_movie_detail.dart';
 import 'package:movie_app/domain/usecases/get_popular.dart';
+import 'package:movie_app/domain/usecases/usecase.dart';
 import 'package:movie_app/presentation/blocs/bloc_backdrop/backdrop_bloc.dart';
 import 'package:movie_app/presentation/blocs/bloc_carousel/movie_carasel_bloc.dart';
 import 'package:movie_app/presentation/blocs/language_bloc/language_bloc.dart';
@@ -17,10 +23,14 @@ import 'package:movie_app/presentation/blocs/movie_tabbed/movie_tabed_bloc.dart'
 
 import '../common/constants/Api_Constant.dart';
 import '../data/core/api_client.dart';
+import '../data/repositories/fav_repository_impl.dart';
+import '../domain/repositories/fav_repository.dart';
+import '../domain/usecases/favorite_movie/is_Fav_usecase.dart';
 import '../domain/usecases/getCast.dart';
 import '../domain/usecases/get_playing_now.dart';
 import '../domain/usecases/get_trending.dart';
 import '../domain/usecases/search_case.dart';
+import '../presentation/blocs/bloc_favorite/favorite_bloc.dart';
 import '../presentation/blocs/cast_bloc.dart';
 import '../presentation/blocs/searchBloc/search_bloc.dart';
 import '../presentation/blocs/videobloc/video_bloc.dart';
@@ -34,6 +44,14 @@ Future init() async {
           baseUrl: ApiConstant.BASE_URL
       )
   ));
+
+  getItInstance.registerSingletonAsync<Isar>(()  async{
+    return await Isar.open([FavoriteMovieSchema],inspector: true);
+  });
+
+
+  getItInstance.registerLazySingleton<MovieRepository>(() => MovieRepositoryImpl(remoteDataSource: getItInstance()));
+
 
   getItInstance.registerLazySingleton<ApiClient>(() => ApiClient(getItInstance()));
 
@@ -53,7 +71,7 @@ Future init() async {
 
   getItInstance.registerLazySingleton<GetVideos>(() => GetVideos(movieRepository: getItInstance()));
 
-  getItInstance.registerLazySingleton<MovieRepository>(() => MovieRepositoryImpl(remoteDataSource: getItInstance()));
+
 
   getItInstance.registerLazySingleton<GetCast>(() => GetCast(repository: getItInstance()));
   
@@ -79,6 +97,32 @@ Future init() async {
       getMovieDetail: getItInstance(),
       castBloc: getItInstance(),
       videoBloc: getItInstance()));
+
+
+
+
+  getItInstance.registerLazySingleton<FavoriteLocalDataSource>(() => FavoriteLocalDataSourceImpl(isar:getItInstance()));
+
+  getItInstance.registerLazySingleton<FavRepository>(() => FavRepositoryImpl(favoriteLocalDataSourceImpl: getItInstance()));
+
+  getItInstance.registerLazySingleton<AddFavoriteUseCase>(()=>AddFavoriteUseCase(favRepository: getItInstance()));
+  getItInstance.registerLazySingleton<AllFavoriteUseCase>(() => AllFavoriteUseCase(favRepository: getItInstance()));
+  getItInstance.registerLazySingleton<IsFavUseCase>(() => IsFavUseCase(favRepository: getItInstance()));
+  getItInstance.registerLazySingleton<UnFavUseCase>(() => UnFavUseCase(favRepository: getItInstance()));
+
+/*  getItInstance.registerLazySingleton<UseCase>(()=>  AddFavoriteUseCase(favRepository: getItInstance()),instanceName: "AddFavoriteUseCase");
+  getItInstance.registerLazySingleton<UseCase>(() => AllFavoriteUseCase(favRepository: getItInstance()),instanceName: "AllFavoriteUseCase");
+  getItInstance.registerLazySingleton<UseCase>(() => IsFavUseCase(favRepository: getItInstance()),instanceName: "IsFavUseCase");
+  getItInstance.registerLazySingleton<UseCase>(() => UnFavUseCase(favRepository: getItInstance()),instanceName: "UnFavUseCase");*/
+
+  getItInstance.registerFactory<FavoriteBloc>(() {
+
+    return FavoriteBloc(
+      addFavoriteUseCase: getItInstance( ) ,
+      allFavoriteUseCase: getItInstance() ,
+      isFavUseCase: getItInstance(),
+      unFavUseCase: getItInstance());
+  },);
 
 
 }

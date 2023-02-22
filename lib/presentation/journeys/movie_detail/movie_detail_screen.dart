@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/di/get_it.dart';
+import 'package:movie_app/presentation/blocs/bloc_favorite/favorite_bloc.dart';
 import 'package:movie_app/presentation/blocs/cast_bloc.dart';
 import 'package:movie_app/presentation/blocs/movie_detail/movie_detail_bloc.dart';
 import 'package:movie_app/presentation/blocs/videobloc/video_bloc.dart';
@@ -53,7 +54,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           providers: [
             BlocProvider.value(value: _movieDetailBloc),
             BlocProvider.value(value: _castBloc),
-            BlocProvider.value(value: _videoBloc)
+            BlocProvider.value(value: _videoBloc),
+            BlocProvider<FavoriteBloc>(create: (context){
+              return (getItInstance.get<FavoriteBloc>())..add(IsFavoriteEvent(movieId: widget.movieDetailArguments.movieId));
+            })
           ],
          child: BlocBuilder<MovieDetailBloc, MovieDetailState>(
            builder: (context,state){
