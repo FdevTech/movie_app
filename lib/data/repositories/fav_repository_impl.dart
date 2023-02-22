@@ -5,6 +5,7 @@ import 'package:movie_app/data/models/local/local_movie.dart';
 import 'package:movie_app/domain/entities/app_erro.dart';
 
 import 'package:movie_app/domain/entities/local/fav_entity.dart';
+import 'package:movie_app/domain/entities/movie_detail_entity.dart';
 
 import 'package:movie_app/domain/entities/movie_entity.dart';
 
@@ -18,7 +19,7 @@ class FavRepositoryImpl extends FavRepository {
   FavRepositoryImpl({required this.favoriteLocalDataSourceImpl});
 
   @override
-  Future<Either<AppError, bool>> adToFav(MovieEntity movieEntity) async {
+  Future<Either<AppError, bool>> adToFav(MovieDetailEntity movieEntity) async {
        try{
          final movieFav =  FavoriteMovie()
            ..title = movieEntity.title

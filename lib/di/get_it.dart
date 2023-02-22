@@ -24,6 +24,9 @@ import 'package:movie_app/presentation/blocs/movie_tabbed/movie_tabed_bloc.dart'
 import '../common/constants/Api_Constant.dart';
 import '../data/core/api_client.dart';
 import '../data/repositories/fav_repository_impl.dart';
+import '../domain/entities/local/fav_entity.dart';
+import '../domain/entities/movie_detail_entity.dart';
+import '../domain/entities/no_params.dart';
 import '../domain/repositories/fav_repository.dart';
 import '../domain/usecases/favorite_movie/is_Fav_usecase.dart';
 import '../domain/usecases/getCast.dart';
@@ -105,23 +108,20 @@ Future init() async {
 
   getItInstance.registerLazySingleton<FavRepository>(() => FavRepositoryImpl(favoriteLocalDataSourceImpl: getItInstance()));
 
-  getItInstance.registerLazySingleton<AddFavoriteUseCase>(()=>AddFavoriteUseCase(favRepository: getItInstance()));
-  getItInstance.registerLazySingleton<AllFavoriteUseCase>(() => AllFavoriteUseCase(favRepository: getItInstance()));
-  getItInstance.registerLazySingleton<IsFavUseCase>(() => IsFavUseCase(favRepository: getItInstance()));
-  getItInstance.registerLazySingleton<UnFavUseCase>(() => UnFavUseCase(favRepository: getItInstance()));
 
-/*  getItInstance.registerLazySingleton<UseCase>(()=>  AddFavoriteUseCase(favRepository: getItInstance()),instanceName: "AddFavoriteUseCase");
-  getItInstance.registerLazySingleton<UseCase>(() => AllFavoriteUseCase(favRepository: getItInstance()),instanceName: "AllFavoriteUseCase");
-  getItInstance.registerLazySingleton<UseCase>(() => IsFavUseCase(favRepository: getItInstance()),instanceName: "IsFavUseCase");
-  getItInstance.registerLazySingleton<UseCase>(() => UnFavUseCase(favRepository: getItInstance()),instanceName: "UnFavUseCase");*/
+
+  getItInstance.registerLazySingleton<UseCase<bool,MovieDetailEntity>>(()=>  AddFavoriteUseCase(favRepository: getItInstance()),instanceName: "AddFavoriteUseCase");
+  getItInstance.registerLazySingleton<UseCase<List<FavEntity>,NoParams>>(() => AllFavoriteUseCase(favRepository: getItInstance()),instanceName: "AllFavoriteUseCase");
+  getItInstance.registerLazySingleton<UseCase<bool,int>>(() => IsFavUseCase(favRepository: getItInstance()),instanceName: "IsFavUseCase");
+  getItInstance.registerLazySingleton<UseCase<bool,int>>(() => UnFavUseCase(favRepository: getItInstance()),instanceName: "UnFavUseCase");
 
   getItInstance.registerFactory<FavoriteBloc>(() {
 
     return FavoriteBloc(
-      addFavoriteUseCase: getItInstance( ) ,
-      allFavoriteUseCase: getItInstance() ,
-      isFavUseCase: getItInstance(),
-      unFavUseCase: getItInstance());
+      addFavoriteUseCase: getItInstance(instanceName: "AddFavoriteUseCase") ,
+      allFavoriteUseCase: getItInstance(instanceName: "AllFavoriteUseCase") ,
+      isFavUseCase: getItInstance(instanceName: "IsFavUseCase"),
+      unFavUseCase: getItInstance(instanceName: "UnFavUseCase"));
   },);
 
 

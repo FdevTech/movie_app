@@ -7,7 +7,7 @@ abstract class FavoriteEvent extends Equatable {
 
 class AddToFavoriteEvent extends FavoriteEvent
 {
-   final MovieEntity movieEntity;
+   final MovieDetailEntity movieEntity;
    const AddToFavoriteEvent({required this.movieEntity});
 
   @override

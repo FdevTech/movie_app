@@ -27,14 +27,6 @@ class UnFavoriteState extends FavoriteState {
   @override
   List<Object?> get props => [isDeleted];
 }
-class AddToFavoriteState extends FavoriteState {
-  final bool isAdded;
-
-  const AddToFavoriteState({required this.isAdded});
-
-  @override
-  List<Object?> get props => [isAdded];
-}
 
 class GetAllFavoriteState extends FavoriteState {
   final List<FavEntity> faavorites;
