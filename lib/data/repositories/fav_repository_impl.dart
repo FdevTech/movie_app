@@ -7,11 +7,12 @@ import 'package:movie_app/domain/entities/app_erro.dart';
 import 'package:movie_app/domain/entities/local/fav_entity.dart';
 import 'package:movie_app/domain/entities/movie_detail_entity.dart';
 
-import 'package:movie_app/domain/entities/movie_entity.dart';
 
 import '../../domain/repositories/fav_repository.dart';
 import '../data_sources/favorite_datasources.dart';
-import 'movie_repository_impl.dart';
+
+
+import 'dart:developer' as dev show log;
 
 class FavRepositoryImpl extends FavRepository {
   final FavoriteLocalDataSource favoriteLocalDataSourceImpl;
@@ -23,10 +24,11 @@ class FavRepositoryImpl extends FavRepository {
        try{
          final movieFav =  FavoriteMovie()
            ..title = movieEntity.title
-           ..posterPath=movieEntity.posterPath
+           ..posterPath=movieEntity.backdropPath
            ..overview=movieEntity.overview
            ..id = movieEntity.id ;
         final result= await favoriteLocalDataSourceImpl.insert(movieFav);
+        dev.log("add movie movieEntity.backdropPath=>${movieEntity.backdropPath}  movieFav.posterPath=>${movieFav.posterPath}");
         return Right(result);
        }
        on Exception

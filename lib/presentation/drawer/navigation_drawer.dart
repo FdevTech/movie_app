@@ -6,6 +6,7 @@ import 'package:movie_app/common/constants/TranslationConstants.dart';
 import 'package:movie_app/common/extensions/string_extension.dart';
 import 'package:movie_app/presentation/blocs/language_bloc/language_bloc.dart';
 import 'package:movie_app/presentation/drawer/navigation_list_item.dart';
+import 'package:movie_app/presentation/journeys/favorite/favorite_screen.dart';
 import 'package:movie_app/presentation/widgets/logo.dart';
 import 'package:wiredash/wiredash.dart';
 
@@ -49,7 +50,12 @@ class NavigationDrawer extends StatelessWidget {
                ),
                NavigationListItem(
                    title: TranslationConstants.favoriteMovies.t(context),
-                   onPressed: (){}),
+                   onPressed: (){
+                     Navigator.of(context).pop();
+                     Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                       return const FavoriteScreen();
+                     }));
+                   }),
               NavigationExpandedListItem(
                 title: TranslationConstants.languages.t(context),
                 onPressed: (i){

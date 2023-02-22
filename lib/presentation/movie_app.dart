@@ -54,7 +54,7 @@ class _MovieAppState extends State<MovieApp> {
                             scaffoldBackgroundColor: AppColor.vulcan,
                             visualDensity: VisualDensity.adaptivePlatformDensity,
                             textTheme: ThemeText.getTextTheme(),
-                            appBarTheme: const AppBarTheme(elevation: 0,)
+                            appBarTheme:  const AppBarTheme(elevation: 0,backgroundColor: AppColor.vulcan)
                         ),
                         supportedLocales: Languages.languages.map((e) =>
                             Locale(e.code))

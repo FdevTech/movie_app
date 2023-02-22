@@ -49,7 +49,11 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
 
     on<UnFavoriteEvent>((event, emit) async {
       final results = await unFavUseCase(event.movieId);
-      results.fold((l) => emit(FavoriteStateError()), (r) => emit(UnFavoriteState(isDeleted: r)));
+      results.fold((l) => emit(FavoriteStateError()), (r) {
+        // emit(AllFavoriteEvent());
+        add(const AllFavoriteEvent());
+        emit(UnFavoriteState(isDeleted: r));
+      });
     });
 
   }

@@ -51,8 +51,11 @@ class FavoriteLocalDataSourceImpl extends FavoriteLocalDataSource {
 
   @override
   Future<bool> unFavorite(int id) async{
+    bool result = false;
     try{
-      final result  = await isar.favoriteMovies.delete(id);
+       await isar.writeTxn(() async{
+         result = await isar.favoriteMovies.delete(id);
+      });
       return result;
     }
     on Exception {
