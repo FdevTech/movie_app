@@ -41,7 +41,9 @@ class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
   Widget build(BuildContext context) {
     return BlocBuilder<MovieTabBloc, MovieTabState>(
       builder: (context, state) {
-        if(state is MovieTabChangedState){ dev.log("state=>${state.movies.length}");}
+       /* if(state is MovieTabChangedState){
+          dev.log("state=>${state.movies.length}")
+          ;}*/
         return Padding(
           padding:  EdgeInsets.only(top: Sizes.dimen_4.h),
           child: Column(
@@ -61,7 +63,6 @@ class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
                 ),
                 if(state is MovieTabChangedState)
                   Expanded(child: MovieListView(movies: state.movies)),
-
                 if(state is MovieTabErrorState)
                   AppErrorWidget(
                       appErrorType: state.appErrorType,

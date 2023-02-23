@@ -4,7 +4,7 @@ import 'package:movie_app/presentation/blocs/bloc_favorite/favorite_bloc.dart';
 
 import '../../../di/get_it.dart';
 import 'favorite_movie_grid.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({Key? key}) : super(key: key);
 
@@ -51,6 +51,15 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     movies:results
                   );
                 }
+              }
+            if(state is FavoriteInitial)
+              {
+                return const Center(
+                  child: SpinKitRotatingCircle(
+                    color: Colors.white,
+                    size: 50.0,
+                  ),
+                );
               }
             return const SizedBox.shrink();
           },

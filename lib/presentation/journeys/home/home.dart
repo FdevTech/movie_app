@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:movie_app/di/get_it.dart';
 import 'package:movie_app/presentation/blocs/bloc_backdrop/backdrop_bloc.dart';
 import 'package:movie_app/presentation/blocs/bloc_carousel/movie_carasel_bloc.dart';
@@ -83,6 +84,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPress: (){
                     movieCarouselBloc.add(const CarouselLoadEvent());
                   },
+                );
+              }
+            else if(state is MovieCarouselInitial)
+              {
+                return const Center(
+                  child: SpinKitRotatingCircle(
+                    color: Colors.white,
+                    size: 50.0,
+                  ),
                 );
               }
             return const SizedBox.shrink();
