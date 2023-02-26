@@ -12,11 +12,11 @@ import 'package:wiredash/wiredash.dart';
 
 import '../../common/constants/languages.dart';
 import '../../common/constants/size_contants.dart';
-import '../app_localization.dart';
-import '../themes/app_colors.dart';
 import '../widgets/app_dialog.dart';
 import 'navigation_expanded_list_tile.dart';
-import 'dart:developer' as dev show log;
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({Key? key}) : super(key: key);
 
@@ -49,7 +49,8 @@ class NavigationDrawer extends StatelessWidget {
 
                ),
                NavigationListItem(
-                   title: TranslationConstants.favoriteMovies.t(context),
+                   //title: TranslationConstants.favoriteMovies.t(context),
+                   title: AppLocalizations.of(context)!.favoriteMovies,
                    onPressed: (){
                      Navigator.of(context).pop();
                      Navigator.of(context).push(MaterialPageRoute(builder: (context){
@@ -57,20 +58,23 @@ class NavigationDrawer extends StatelessWidget {
                      }));
                    }),
               NavigationExpandedListItem(
-                title: TranslationConstants.languages.t(context),
+                //title: TranslationConstants.languages.t(context),
+                  title: AppLocalizations.of(context)!.languages,
                 onPressed: (i){
                   BlocProvider.of<LanguageBloc>(context).add(ToggleLanguageEvent(Languages.languages[i]));
                 },
                 children: Languages.languages.map((e) => e.value).toList(),
               ),
               NavigationListItem(
-                  title: TranslationConstants.feedback.t(context),
+                  //title: TranslationConstants.feedback.t(context),
+                   title: AppLocalizations.of(context)!.feedback,
                   onPressed: (){
                     Navigator.of(context).pop();
                     Wiredash.of(context).show();
                   }),
               NavigationListItem(
-                  title: TranslationConstants.about.t(context),
+                  //title: TranslationConstants.about.t(context),
+                  title: AppLocalizations.of(context)!.about,
                   onPressed: (){
                     Navigator.of(context).pop();
                     _showDialog(context);
@@ -86,7 +90,8 @@ class NavigationDrawer extends StatelessWidget {
         context: context, 
         builder:(context){
           return AppDialog(
-            title: "About",
+            //title: "About",
+            title: AppLocalizations.of(context)!.about,
             description: "This product uses the TMDB API but is not, endorsed or certified by TMDb."
                 "This app is developed for education purpose.",
             child: Image.asset("assets/pngs/tmdb_logo.png"),

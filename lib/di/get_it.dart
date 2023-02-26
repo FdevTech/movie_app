@@ -3,9 +3,13 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:movie_app/data/data_sources/favorite_datasources.dart';
+import 'package:movie_app/data/data_sources/language_datasource.dart';
 import 'package:movie_app/data/data_sources/movie_datasourece.dart';
+import 'package:movie_app/data/models/local/language.dart';
 import 'package:movie_app/data/models/local/local_movie.dart';
+import 'package:movie_app/data/repositories/language_repository_impl.dart';
 import 'package:movie_app/data/repositories/movie_repository_impl.dart';
+import 'package:movie_app/domain/repositories/language_repository.dart';
 import 'package:movie_app/domain/repositories/movie_repository.dart';
 import 'package:movie_app/domain/usecases/favorite_movie/addfav_usecase.dart';
 import 'package:movie_app/domain/usecases/favorite_movie/getAllFavUseCase.dart';
@@ -14,6 +18,8 @@ import 'package:movie_app/domain/usecases/getVideos.dart';
 import 'package:movie_app/domain/usecases/get_comming_soon.dart';
 import 'package:movie_app/domain/usecases/get_movie_detail.dart';
 import 'package:movie_app/domain/usecases/get_popular.dart';
+import 'package:movie_app/domain/usecases/language_usecase/reterieve_language_usecase.dart';
+import 'package:movie_app/domain/usecases/language_usecase/update_language_usecase.dart';
 import 'package:movie_app/domain/usecases/usecase.dart';
 import 'package:movie_app/presentation/blocs/bloc_backdrop/backdrop_bloc.dart';
 import 'package:movie_app/presentation/blocs/bloc_carousel/movie_carasel_bloc.dart';
@@ -24,6 +30,7 @@ import 'package:movie_app/presentation/blocs/movie_tabbed/movie_tabed_bloc.dart'
 import '../common/constants/Api_Constant.dart';
 import '../data/core/api_client.dart';
 import '../data/repositories/fav_repository_impl.dart';
+import '../domain/entities/language_entity.dart';
 import '../domain/entities/local/fav_entity.dart';
 import '../domain/entities/movie_detail_entity.dart';
 import '../domain/entities/no_params.dart';
@@ -49,7 +56,12 @@ Future init() async {
   ));
 
   getItInstance.registerSingletonAsync<Isar>(()  async{
-    return await Isar.open([FavoriteMovieSchema],inspector: true);
+
+    if(Isar.instanceNames.isEmpty) {
+      return await Isar.open([FavoriteMovieSchema, LanguageModelSchema],
+          inspector: true);
+    }
+    return Future.value(Isar.getInstance());
   });
 
 
@@ -88,7 +100,6 @@ Future init() async {
       getComingSoon: getItInstance()));
 
 
-  getItInstance.registerSingleton<LanguageBloc>(LanguageBloc());
 
   getItInstance.registerFactory<CastBloc>(() => CastBloc(getCast: getItInstance()));
 
@@ -104,12 +115,12 @@ Future init() async {
 
 
 
-  getItInstance.registerLazySingleton<FavoriteLocalDataSource>(() => FavoriteLocalDataSourceImpl(isar:getItInstance()));
 
+
+
+  //fav repository
+  getItInstance.registerLazySingleton<FavoriteLocalDataSource>(() => FavoriteLocalDataSourceImpl(fututeIsar:getItInstance.getAsync<Isar>()));
   getItInstance.registerLazySingleton<FavRepository>(() => FavRepositoryImpl(favoriteLocalDataSourceImpl: getItInstance()));
-
-
-
   getItInstance.registerLazySingleton<UseCase<bool,MovieDetailEntity>>(()=>  AddFavoriteUseCase(favRepository: getItInstance()),instanceName: "AddFavoriteUseCase");
   getItInstance.registerLazySingleton<UseCase<List<FavEntity>,NoParams>>(() => AllFavoriteUseCase(favRepository: getItInstance()),instanceName: "AllFavoriteUseCase");
   getItInstance.registerLazySingleton<UseCase<bool,int>>(() => IsFavUseCase(favRepository: getItInstance()),instanceName: "IsFavUseCase");
@@ -124,5 +135,17 @@ Future init() async {
       unFavUseCase: getItInstance(instanceName: "UnFavUseCase"));
   },);
 
+
+  //language
+  getItInstance.registerLazySingleton<LanguageDataSource>(()  {
+    return LanguageDataSourceImpl(futureIsar:  getItInstance.getAsync<Isar>());
+  });
+  getItInstance.registerLazySingleton<LanguageRepository>(() => LanguageRepositoryImpl(getItInstance()));
+  getItInstance.registerLazySingleton<UseCase<LanguageEntity,NoParams>>(()=>  RetrieveLanguageUseCase(getItInstance()),instanceName: "RetrieveLanguageUseCase");
+  getItInstance.registerLazySingleton<UseCase<void, LanguageEntity>>(() => UpdateLanguageUseCase(getItInstance()),instanceName: "UpdateLanguageUseCase");
+  getItInstance.registerSingleton<LanguageBloc>(
+      LanguageBloc(
+          retrieveLanguageUseCase: getItInstance(instanceName:"RetrieveLanguageUseCase" ),
+          updateLanguageUseCase: getItInstance(instanceName: 'UpdateLanguageUseCase')));
 
 }

@@ -1,0 +1,10 @@
+{
+  "favoriteMovies": "Films préférés",
+  "languages": "Langues",
+  "feedback": "Retour",
+  "about": "À propos",
+  "popular": "POPULAIRE",
+  "now": "MAINTENANT",
+  "soon": "BIENTÔT",
+  "no_fav_message": "Pas encore de films favoris"
+}

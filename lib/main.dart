@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:movie_app/di/get_it.dart';
 import 'package:movie_app/presentation/movie_app.dart';
 
-void main() {
+void main() async{
   init();
   WidgetsFlutterBinding.ensureInitialized();
   unawaited(SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]));

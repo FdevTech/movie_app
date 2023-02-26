@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/di/get_it.dart';
-import 'package:movie_app/presentation/app_localization.dart';
+
 import 'package:movie_app/presentation/blocs/language_bloc/language_bloc.dart';
 import 'package:movie_app/presentation/themes/app_colors.dart';
 import 'package:movie_app/presentation/themes/theme_text.dart';
@@ -12,7 +12,7 @@ import 'package:movie_app/presentation/wiredash.dart';
 
 import '../common/constants/languages.dart';
 import 'journeys/home/home.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:developer' as dev show log;
 class MovieApp extends StatefulWidget {
   @override
@@ -20,17 +20,17 @@ class MovieApp extends StatefulWidget {
 }
 
 class _MovieAppState extends State<MovieApp> {
-  late LanguageBloc _languageBloc;
+ // late LanguageBloc _languageBloc;
 
   @override
   void initState() {
-    _languageBloc = getItInstance<LanguageBloc>();
+    //_languageBloc = getItInstance<LanguageBloc>();
     super.initState();
   }
 
   @override
   void dispose() {
-    _languageBloc.close();
+   // _languageBloc.close();
     super.dispose();
   }
 
@@ -39,8 +39,9 @@ class _MovieAppState extends State<MovieApp> {
     return ScreenUtilInit(
         designSize: const Size(414, 896),
         builder: (context, child) {
-          return BlocProvider<LanguageBloc>.value(
-            value: _languageBloc,
+          return BlocProvider<LanguageBloc>(
+           // value: _languageBloc..add(LoadCurrentLanguage()),
+            create: (context)=>(getItInstance<LanguageBloc>())..add(LoadCurrentLanguage()),
             child: BlocBuilder<LanguageBloc, LanguageState>(
               builder: (context, state) {
                 if(state is LanguageLoaded)
@@ -61,9 +62,10 @@ class _MovieAppState extends State<MovieApp> {
                             .toList(),
                         locale: state.locale,
                         localizationsDelegates: const [
-                          AppLocalisations.delegate,
+                          AppLocalizations.delegate,
                           GlobalMaterialLocalizations.delegate,
-                          GlobalWidgetsLocalizations.delegate
+                          GlobalWidgetsLocalizations.delegate,
+                          GlobalCupertinoLocalizations.delegate
                         ],
                         home: child,
                       ),

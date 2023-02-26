@@ -4,6 +4,14 @@ abstract class LanguageEvent extends Equatable {
   const LanguageEvent();
 }
 
+
+class LoadCurrentLanguage extends LanguageEvent {
+
+  @override
+  List<Object?> get props => [];
+
+}
+
 class ToggleLanguageEvent extends LanguageEvent
 {
   final LanguageEntity language;

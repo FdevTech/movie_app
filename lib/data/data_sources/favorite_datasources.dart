@@ -10,9 +10,13 @@ abstract class FavoriteLocalDataSource{
 }
 
 class FavoriteLocalDataSourceImpl extends FavoriteLocalDataSource {
-  final Isar isar;
-
-  FavoriteLocalDataSourceImpl({required this.isar});
+  final Future<Isar> fututeIsar;
+  late Isar isar;
+  FavoriteLocalDataSourceImpl({required this.fututeIsar}){
+     fututeIsar.then((value){
+       isar = value;
+     });
+  }
   @override
   Future<List<FavoriteMovie>> getAllFavorite() async {
      try{

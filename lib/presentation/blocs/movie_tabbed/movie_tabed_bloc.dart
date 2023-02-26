@@ -11,7 +11,7 @@ import '../../../domain/usecases/get_comming_soon.dart';
 import '../../../domain/usecases/get_playing_now.dart';
 import '../../../domain/usecases/get_popular.dart';
 
-import 'dart:developer' as dev show log;
+
 part 'movie_tabed_event.dart';
 part 'movie_tabed_state.dart';
 
@@ -26,7 +26,7 @@ class MovieTabBloc extends Bloc<MovieTabEvent, MovieTabState> {
     required this.getComingSoon}) : super(const MovieTabInitialState()) {
     on<MovieTabChangedEvent>((event, emit) async {
       Either<AppError, List<MovieEntity>> movieEither;
-      dev.log("currentTabIndex:=>${event.currentTabIndex}");
+
       switch(event.currentTabIndex)
       {
 
@@ -46,7 +46,7 @@ class MovieTabBloc extends Bloc<MovieTabEvent, MovieTabState> {
          emit(MovieTabErrorState(event.currentTabIndex,appErrorType: error.appErrorType));
       },
               (movies) {
-                dev.log("fold right=> ${movies.length}");
+
                 emit(MovieTabChangedState(movies: movies,currentIndex: event.currentTabIndex));
 
               });

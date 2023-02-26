@@ -5,6 +5,7 @@ import 'package:movie_app/presentation/blocs/bloc_favorite/favorite_bloc.dart';
 import '../../../di/get_it.dart';
 import 'favorite_movie_grid.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({Key? key}) : super(key: key);
 
@@ -31,7 +32,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       create: (context) => (getItInstance.get<FavoriteBloc>())..add(const AllFavoriteEvent()),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Favorite"),
+          title:  Text(AppLocalizations.of(context)!.favoriteMovies),
         ),
         body: BlocBuilder<FavoriteBloc, FavoriteState>(
           builder: (context, state) {
@@ -41,7 +42,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 if(results.isEmpty)
                   {
                     return  Center(
-                      child: Text("No favorites movies yet",style: Theme.of(context).textTheme.caption?.copyWith(
+                      child: Text(AppLocalizations.of(context)!.no_fav_message,style: Theme.of(context).textTheme.caption?.copyWith(
                         color: Colors.white
                       ),),
                     );

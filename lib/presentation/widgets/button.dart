@@ -17,7 +17,7 @@ class Button extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 40.w),
       margin: EdgeInsets.symmetric(vertical: 12.h),
-      height: 40.h,
+      height: 50.h,
        decoration: BoxDecoration(
          gradient: const LinearGradient(colors: [
            AppColor.royalBlue,
