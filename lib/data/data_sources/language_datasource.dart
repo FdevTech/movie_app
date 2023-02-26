@@ -1,7 +1,6 @@
 
 import 'package:isar/isar.dart';
 import 'package:movie_app/data/models/local/language.dart';
-import 'package:movie_app/di/get_it.dart';
 
 abstract class LanguageDataSource {
   Future<void> updateLanguage(LanguageModel language);
@@ -34,7 +33,7 @@ class LanguageDataSourceImpl extends LanguageDataSource {
   Future<void> updateLanguage(LanguageModel language) async{
      try{
 
-         final result = await isar.writeTxn(()async{
+         await isar.writeTxn(()async{
          await isar.languageModels.put(language);
        });
      }

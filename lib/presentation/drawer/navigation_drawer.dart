@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movie_app/common/constants/TranslationConstants.dart';
-import 'package:movie_app/common/extensions/string_extension.dart';
 import 'package:movie_app/presentation/blocs/language_bloc/language_bloc.dart';
 import 'package:movie_app/presentation/drawer/navigation_list_item.dart';
 import 'package:movie_app/presentation/journeys/favorite/favorite_screen.dart';

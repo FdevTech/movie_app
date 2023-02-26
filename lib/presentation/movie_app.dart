@@ -13,7 +13,7 @@ import 'package:movie_app/presentation/wiredash.dart';
 import '../common/constants/languages.dart';
 import 'journeys/home/home.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'dart:developer' as dev show log;
+
 class MovieApp extends StatefulWidget {
   @override
   State<MovieApp> createState() => _MovieAppState();
