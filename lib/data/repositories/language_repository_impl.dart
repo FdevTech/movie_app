@@ -16,7 +16,7 @@ class LanguageRepositoryImpl extends LanguageRepository {
   Future<Either<AppError,LanguageEntity>> getCurrentLanguage() async{
         try{
            final result = await languageDataSource.getCurrentLanguage();
-           return Right(result!.toLanguageEntity());
+           return Right(result?.toLanguageEntity()??LanguageEntity(code: "en", value: "English"));
         }
         on Exception {
           return const Left(AppError(AppErrorType.database));
